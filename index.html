@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GATE CS Super App - Your complete study companion for GATE Computer Science preparation with practice questions, mock tests, study planner, and more.">
+    <meta name="keywords" content="GATE CS, Computer Science, Study App, Mock Tests, Practice Questions, GATE Preparation">
+    <title>GATE CS Super App - Complete Study Companion</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🎓 GATE CS Super App</h1>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Streak</span>
+                        <span class="stat-value" id="streakCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Days to Exam</span>
+                        <span class="stat-value" id="daysToExam">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-items">
+                <button class="nav-item active" data-section="dashboard">📊 Dashboard</button>
+                <button class="nav-item" data-section="study-planner">📅 Study Planner</button>
+                <button class="nav-item" data-section="subjects">📚 Subjects</button>
+                <button class="nav-item" data-section="practice">✍️ Practice</button>
+                <button class="nav-item" data-section="mock-tests">🎯 Mock Tests</button>
+                <button class="nav-item" data-section="pyqs">📝 PYQs</button>
+                <button class="nav-item" data-section="formulas">🧮 Formulas</button>
+                <button class="nav-item" data-section="pomodoro">⏲️ Pomodoro</button>
+                <button class="nav-item" data-section="analytics">📈 Analytics</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <h2 class="section-title">📊 Dashboard</h2>
+                
+                <div class="dashboard-grid">
+                    <!-- Quick Stats -->
+                    <div class="card quick-stats">
+                        <h3>Quick Stats</h3>
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <div class="stat-icon">📖</div>
+                                <div class="stat-info">
+                                    <p class="stat-number" id="topicsCompleted">0</p>
+                                    <p class="stat-text">Topics Completed</p>
+                                </div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-icon">✅</div>
+                                <div class="stat-info">
+                                    <p class="stat-number" id="questionsAttempted">0</p>
+                                    <p class="stat-text">Questions Attempted</p>
+                                </div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-icon">🎯</div>
+                                <div class="stat-info">
+                                    <p class="stat-number" id="mockTestsTaken">0</p>
+                                    <p class="stat-text">Mock Tests Taken</p>
+                                </div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-icon">⏱️</div>
+                                <div class="stat-info">
+                                    <p class="stat-number" id="studyHours">0</p>
+                                    <p class="stat-text">Study Hours</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exam Countdown -->
+                    <div class="card">
+                        <h3>GATE 2026 Countdown</h3>
+                        <div class="exam-countdown">
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownDays">0</span>
+                                <span class="countdown-label">Days</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownHours">0</span>
+                                <span class="countdown-label">Hours</span>
+                            </div>
+                            <div class="countdown-item">
+                                <span class="countdown-value" id="countdownMinutes">0</span>
+                                <span class="countdown-label">Minutes</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="setExamDate()">Set Exam Date</button>
+                    </div>
+
+                    <!-- Daily Goals -->
+                    <div class="card">
+                        <h3>Today's Goals</h3>
+                        <div id="dailyGoalsList" class="goals-list">
+                            <!-- Goals will be added dynamically -->
+                        </div>
+                        <button class="btn btn-secondary" onclick="addDailyGoal()">+ Add Goal</button>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card">
+                        <h3>Recent Activity</h3>
+                        <div id="recentActivity" class="activity-list">
+                            <p class="empty-state">No recent activity</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Study Planner Section -->
+            <section id="study-planner" class="section">
+                <h2 class="section-title">📅 Study Planner</h2>
+                
+                <div class="planner-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>My Study Schedule</h3>
+                            <button class="btn btn-primary" onclick="addStudyTask()">+ Add Task</button>
+                        </div>
+                        <div id="studyTasksList" class="tasks-list">
+                            <!-- Tasks will be added dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Subjects Section -->
+            <section id="subjects" class="section">
+                <h2 class="section-title">📚 Subjects & Syllabus</h2>
+                
+                <div class="subjects-grid" id="subjectsGrid">
+                    <!-- Subject cards will be added dynamically -->
+                </div>
+            </section>
+
+            <!-- Practice Section -->
+            <section id="practice" class="section">
+                <h2 class="section-title">✍️ Practice Questions</h2>
+                
+                <div class="practice-container">
+                    <div class="card">
+                        <h3>Select Subject</h3>
+                        <div class="subject-select-grid" id="practiceSubjectSelect">
+                            <!-- Subject buttons will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="card" id="practiceQuestionCard" style="display: none;">
+                        <div class="question-header">
+                            <h3>Question <span id="currentQuestionNumber">1</span></h3>
+                            <span class="difficulty-badge" id="questionDifficulty">Medium</span>
+                        </div>
+                        <div class="question-content">
+                            <p id="questionText"></p>
+                            <div id="questionOptions" class="options-list">
+                                <!-- Options will be added dynamically -->
+                            </div>
+                        </div>
+                        <div class="question-actions">
+                            <button class="btn btn-secondary" onclick="showSolution()">Show Solution</button>
+                            <button class="btn btn-primary" onclick="nextQuestion()">Next Question</button>
+                        </div>
+                        <div id="solutionBox" class="solution-box" style="display: none;">
+                            <h4>Solution:</h4>
+                            <p id="solutionText"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mock Tests Section -->
+            <section id="mock-tests" class="section">
+                <h2 class="section-title">🎯 Mock Tests</h2>
+                
+                <div class="mock-tests-grid">
+                    <div class="card">
+                        <h3>Full Length Test</h3>
+                        <p>Complete GATE CS mock test with 65 questions in 3 hours</p>
+                        <ul class="test-info">
+                            <li>📝 65 Questions</li>
+                            <li>⏱️ 180 Minutes</li>
+                            <li>🎯 100 Marks</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="startMockTest('full')">Start Test</button>
+                    </div>
+
+                    <div id="subjectTestsGrid">
+                        <!-- Subject-wise tests will be added dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- PYQs Section -->
+            <section id="pyqs" class="section">
+                <h2 class="section-title">📝 Previous Year Questions</h2>
+                
+                <div class="pyq-container">
+                    <div class="card">
+                        <h3>Filter by Year & Subject</h3>
+                        <div class="filter-row">
+                            <select id="pyqYearFilter" class="select-input">
+                                <option value="all">All Years</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                            </select>
+                            <select id="pyqSubjectFilter" class="select-input">
+                                <option value="all">All Subjects</option>
+                            </select>
+                            <button class="btn btn-primary" onclick="filterPYQs()">Apply Filter</button>
+                        </div>
+                    </div>
+
+                    <div id="pyqQuestionsList" class="pyq-list">
+                        <!-- PYQ questions will be added dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Formulas Section -->
+            <section id="formulas" class="section">
+                <h2 class="section-title">🧮 Formula Sheets</h2>
+                
+                <div class="formulas-container">
+                    <div class="card">
+                        <input type="text" 
+                               id="formulaSearch" 
+                               class="search-input" 
+                               placeholder="🔍 Search formulas..."
+                               oninput="searchFormulas()">
+                    </div>
+
+                    <div id="formulasList" class="formulas-grid">
+                        <!-- Formula cards will be added dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pomodoro Section -->
+            <section id="pomodoro" class="section">
+                <h2 class="section-title">⏲️ Pomodoro Timer</h2>
+                
+                <div class="pomodoro-container">
+                    <div class="card pomodoro-card">
+                        <div class="timer-display">
+                            <div class="timer-circle">
+                                <svg class="timer-svg" viewBox="0 0 200 200">
+                                    <circle cx="100" cy="100" r="90" class="timer-bg"></circle>
+                                    <circle id="timerProgress" cx="100" cy="100" r="90" class="timer-progress"></circle>
+                                </svg>
+                                <div class="timer-text">
+                                    <span id="timerMinutes">25</span>:<span id="timerSeconds">00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timer-phase">
+                            <span id="timerPhase">Focus Session</span>
+                        </div>
+                        
+                        <div class="timer-controls">
+                            <button class="btn btn-primary btn-large" id="timerStartBtn" onclick="startPomodoro()">Start</button>
+                            <button class="btn btn-secondary" id="timerResetBtn" onclick="resetPomodoro()" style="display: none;">Reset</button>
+                        </div>
+
+                        <div class="timer-stats">
+                            <div class="timer-stat">
+                                <span class="timer-stat-value" id="pomodoroCount">0</span>
+                                <span class="timer-stat-label">Sessions Today</span>
+                            </div>
+                            <div class="timer-stat">
+                                <span class="timer-stat-value" id="totalStudyTime">0h</span>
+                                <span class="timer-stat-label">Total Time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="section">
+                <h2 class="section-title">📈 Analytics & Insights</h2>
+                
+                <div class="analytics-grid">
+                    <div class="card">
+                        <h3>Subject-wise Performance</h3>
+                        <div id="subjectPerformance" class="performance-bars">
+                            <!-- Performance bars will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Weak Areas</h3>
+                        <div id="weakAreas" class="weak-areas-list">
+                            <p class="empty-state">Complete practice questions to identify weak areas</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Study Streak</h3>
+                        <div class="streak-calendar" id="streakCalendar">
+                            <!-- Calendar will be added dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Progress Overview</h3>
+                        <div id="progressOverview" class="progress-overview">
+                            <!-- Progress stats will be added dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modal for Mock Test -->
+    <div id="mockTestModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 id="mockTestTitle">Mock Test</h2>
+                <div class="test-timer">
+                    <span>⏱️ Time Left: </span>
+                    <span id="testTimer">180:00</span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="test-question">
+                    <h3>Question <span id="testQuestionNum">1</span> of <span id="testTotalQuestions">65</span></h3>
+                    <p id="testQuestionText"></p>
+                    <div id="testOptions" class="options-list">
+                        <!-- Options will be added dynamically -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="previousTestQuestion()">← Previous</button>
+                <button class="btn btn-secondary" onclick="closeModal('mockTestModal')">Save & Exit</button>
+                <button class="btn btn-primary" onclick="nextTestQuestion()">Next →</button>
+                <button class="btn btn-primary" onclick="submitMockTest()" id="submitTestBtn" style="display: none;">Submit Test</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Test Results -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Test Results</h2>
+                <button class="close-btn" onclick="closeModal('resultsModal')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="results-summary">
+                    <div class="result-score">
+                        <span class="score-value" id="resultScore">0</span>
+                        <span class="score-total">/ 100</span>
+                    </div>
+                    <div class="result-stats">
+                        <div class="result-stat">
+                            <span class="result-label">Correct:</span>
+                            <span class="result-value" id="resultCorrect">0</span>
+                        </div>
+                        <div class="result-stat">
+                            <span class="result-label">Incorrect:</span>
+                            <span class="result-value" id="resultIncorrect">0</span>
+                        </div>
+                        <div class="result-stat">
+                            <span class="result-label">Unattempted:</span>
+                            <span class="result-value" id="resultUnattempted">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('resultsModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
